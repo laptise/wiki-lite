@@ -11,7 +11,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     .get(`document/${docName}`)
     .then(({ data }) => data)
     .catch();
-  console.log(res);
 
   return { props: {} };
 };
