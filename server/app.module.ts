@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DocumentModule } from './document/document.module';
+import { DocumentEntity } from './entitiy/document.entity';
 
 @Module({
   controllers: [AppController],
@@ -19,6 +20,7 @@ import { DocumentModule } from './document/document.module';
       password: process.env.DB_PASS,
       database: 'wiki_lite_db',
       synchronize: true,
+      entities: [DocumentEntity],
     }),
   ],
 })

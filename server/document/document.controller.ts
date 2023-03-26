@@ -1,10 +1,11 @@
 import { Controller, Get, Param } from '@nestjs/common';
+import { DocumentService } from './document.service';
 
 @Controller('document')
 export class DocumentController {
-  @Get(':id')
-  public async getDocuemnt(@Param('id') id: string) {
-    console.log(id);
-    return 'hi';
+  constructor(private readonly documentService: DocumentService) {}
+  @Get(':name')
+  public async getDocuemnt(@Param('name') name: string) {
+    return await this.documentService.getDocument(name);
   }
 }

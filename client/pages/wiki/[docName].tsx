@@ -1,18 +1,34 @@
 import { nestRef } from '@client/axios-ref';
 import { GetServerSideProps } from 'next';
+import { FC } from 'react';
+import { DocumentEntity } from '@server/entitiy/document.entity';
+import Head from 'next/head';
 
-const Wiki = () => {
-  return 'HI';
+type Props = { doc: DocumentEntity };
+const Wiki: FC<Props> = ({ doc }) => {
+  return (
+    <>
+      <Head>
+        <title>{doc.name}</title>
+      </Head>
+      {doc.content}
+    </>
+  );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  query,
+}) => {
   const docName = query.docName as string;
   const res = await nestRef
-    .get(`document/${docName}`)
+    .get<DocumentEntity>(`document/${docName}`)
     .then(({ data }) => data)
     .catch();
 
-  return { props: {} };
+  if (!res) {
+    return { notFound: true };
+  }
+  return { props: { doc: res } };
 };
 
 export default Wiki;
