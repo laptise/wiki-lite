@@ -1,18 +1,28 @@
 import { nestRef } from '@client/axios-ref';
 import { GetServerSideProps } from 'next';
-import { FC } from 'react';
+import { FC, FormEventHandler, useState } from 'react';
 import { DocumentEntity } from '@server/entitiy/document.entity';
 import Head from 'next/head';
 
 type Props = { doc: DocumentEntity };
 
 const Wiki: FC<Props> = ({ doc }) => {
+  const [value, setValue] = useState(doc.content);
+
+  const edit: FormEventHandler = (e) => {
+    e.preventDefault();
+    console.log(value);
+  };
+
   return (
     <>
       <Head>
         <title>{doc.name}</title>
       </Head>
-      {doc.content}
+      <form onSubmit={edit}>
+        <textarea value={value} onChange={(e) => setValue(e.target.value)} />
+        <button type="submit">修正</button>
+      </form>
     </>
   );
 };
