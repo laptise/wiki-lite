@@ -9,8 +9,9 @@ type Props = { doc: DocumentEntity };
 const Wiki: FC<Props> = ({ doc }) => {
   const [value, setValue] = useState(doc.content);
 
-  const edit: FormEventHandler = (e) => {
+  const edit: FormEventHandler = async (e) => {
     e.preventDefault();
+    await nestRef.post(`document/content/${doc.id}`, { content: value });
     console.log(value);
   };
 

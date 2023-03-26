@@ -14,4 +14,8 @@ export class DocumentService {
     const byName = await this.repo.findOneBy({ name });
     return byName;
   }
+
+  public async updateDocument(id: number, content: string) {
+    return await this.repo.save({ id, content });
+  }
 }
